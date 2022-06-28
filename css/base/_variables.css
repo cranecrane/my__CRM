@@ -1,0 +1,28 @@
+:root {
+    /*** colors ***/
+    --black: #333;
+    --gray: #b0b0b0;
+    --gray-light: #e7e5eb;
+    --red: #f06a4d;
+    --white: #fff;
+
+	  --accent-color-main: #9873ff;
+    --accent-color-light: #b89eff;
+    --accent-color-dark: #8052ff;
+
+	  --text-color-main: var(--black);
+    --text-color-inverse: var(--white);
+    --txt-secondary: var(--gray);
+
+    --bg-color: #e5e5e5;
+
+    /*** font-size ***/
+
+    /*** border ***/
+
+    /*** z-index ***/
+
+    /*** sizes ***/
+    --max-width-container: 1700px;
+    --padding-lr-container: 15px;
+}

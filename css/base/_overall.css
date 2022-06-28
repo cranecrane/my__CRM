@@ -1,0 +1,29 @@
+.btn-reset {
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+	padding: 0;
+}
+
+.container {
+	width: 100%;
+	max-width: var(--max-width-container);
+	padding: 0 var(--padding-lr-container);
+	margin: 0 auto;
+}
+
+.disable-scroll {
+	overflow: hidden;
+}
+
+.site-container {
+	overflow: hidden;
+}
+
+.visually-hidden {
+	position: absolute;
+	clip: rect(0 0 0 0);
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+}
