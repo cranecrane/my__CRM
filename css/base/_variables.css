@@ -12,7 +12,7 @@
 
 	  --text-color-main: var(--black);
     --text-color-inverse: var(--white);
-    --txt-secondary: var(--gray);
+    --text-secondary: var(--gray);
 
     --bg-color: #e5e5e5;
 
@@ -23,6 +23,7 @@
     /*** z-index ***/
 
     /*** sizes ***/
-    --max-width-container: 1700px;
-    --padding-lr-container: 15px;
+    --max-width-container: 1024px;
+    --padding-lr-container-tablet: 20px;
+    --padding-lr-container: 10px;
 }

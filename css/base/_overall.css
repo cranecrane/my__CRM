@@ -12,6 +12,12 @@
 	margin: 0 auto;
 }
 
+@media (min-width: 768px) {
+  .container {
+    padding: 0 var(--padding-lr-container-tablet);
+  }
+}
+
 .disable-scroll {
 	overflow: hidden;
 }
