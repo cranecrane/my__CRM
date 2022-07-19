@@ -1,15 +1,15 @@
 .btn-reset {
 	border: none;
+	padding: 0;
 	background-color: transparent;
 	cursor: pointer;
-	padding: 0;
 }
 
 .container {
+	margin: 0 auto;
+	padding: 0 var(--padding-lr-container);
 	width: 100%;
 	max-width: var(--max-width-container);
-	padding: 0 var(--padding-lr-container);
-	margin: 0 auto;
 }
 
 @media (min-width: 768px) {
@@ -19,10 +19,6 @@
 }
 
 .disable-scroll {
-	overflow: hidden;
-}
-
-.site-container {
 	overflow: hidden;
 }
 

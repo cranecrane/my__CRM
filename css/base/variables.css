@@ -1,0 +1,38 @@
+:root {
+  /*** colors ***/
+  --black: #333;
+  --burnt-sienna: #f06a4d;
+  --electric-violet: #8052ff;
+  --gray: #b0b0b0;
+  --gray-light: #e7e5eb;
+  --gray-suit: #c8c5d1;
+  --heliotrope: #9873ff;
+  --melrose: #b89eff;
+  --white: #fff;
+  --wild-sand: #f5f5f5;
+
+  --accent-color-main: var(--heliotrope);
+  --accent-color-light: var(--melrose);
+  --accent-color-dark: var(--electric-violet);
+  --warning-color: var(--burnt-sienna);
+
+  --text-color-main: var(--black);
+  --text-color-inverse: var(--white);
+  --text-secondary: var(--gray);
+
+  --secondary-elems-color: var(--gray-suit);
+
+  /*** font-size ***/
+
+  /*** border ***/
+
+  /*** z-index ***/
+  --z-change-data-modal: 100;
+
+  /*** sizes ***/
+  --max-width-container: 1024px;
+  --padding-lr-container: 10px;
+  --padding-lr-container-tablet: 20px;
+
+  --contact-size: 16px;
+}
