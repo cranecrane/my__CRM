@@ -1,0 +1,54 @@
+.contact-btn {
+  font-size: 0;
+}
+
+.contact-btn__icon {
+  width: var(--contact-size);
+  height: var(--contact-size);
+
+  opacity: .7;
+  transition: opacity .3s ease-in-out;
+}
+
+.contact-btn:hover .contact-btn__icon,
+.contact-btn:focus-visible .contact-btn__icon {
+  opacity: 1;
+  transition: opacity .3s ease-in-out;
+}
+
+.contact-btn__other {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 100px;
+  border: 1px solid var(--accent-color-main);
+  width: var(--contact-size);
+  height: var(--contact-size);
+
+  font-size: 8px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.contact-btn__other:focus-visible {
+  color: var(--text-color-inverse);
+  background-color: var(--accent-color-main);
+  transition-property: color, background-color;
+  transition-duration: .3s;
+  transition-timing-function: ease-in-out;
+}
+
+@media (min-width: 1024px) {
+  .contact-btn__other:hover {
+    color: var(--text-color-inverse);
+    background-color: var(--accent-color-main);
+    transition-property: color, background-color;
+    transition-duration: .3s;
+    transition-timing-function: ease-in-out;
+  }
+}
+
+.contact-btn__tooltip--value {
+  font-weight: 700;
+}

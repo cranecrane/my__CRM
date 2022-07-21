@@ -27,6 +27,7 @@
   /*** border ***/
 
   /*** z-index ***/
+  --z-clients-table-empty-row: 10;
   --z-change-data-modal: 100;
 
   /*** sizes ***/

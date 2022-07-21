@@ -1,0 +1,85 @@
+.btn {
+  display: flex;
+  align-items: center;
+
+  font-size: 14px;
+  line-height: 1;
+  font-weight: 600;
+  color: var(--text-color-main)
+}
+
+.btn--secondary {
+  border: 1px solid var(--accent-color-main);
+  padding: 12.5px 26.5px;
+
+  color: var(--accent-color-main);
+  transition-property: border-color, color, background-color;
+  transition-duration: .3s;
+  transition-timing-function: ease-in-out;
+}
+
+.btn--secondary:disabled {
+  border-color:  var(--secondary-elems-color);
+  color:  var(--secondary-elems-color);
+
+  transition-property: border-color, color;
+  transition-duration: .3s;
+  transition-timing-function: ease-in-out;
+}
+
+.btn--secondary:focus-visible {
+  color: var(--white);
+  background-color: var(--accent-color-light);
+
+  transition-property: color, background-color;
+  transition-duration: .3s;
+  transition-timing-function: ease-in-out;
+}
+
+@media (min-width: 1024px) {
+  .btn--secondary:hover {
+    color: var(--white);
+    background-color: var(--accent-color-dark);
+
+    transition-property: color, background-color;
+    transition-duration: .3s;
+    transition-timing-function: ease-in-out;
+  }
+}
+
+.btn--primary {
+  padding: 12.5px 26.5px;
+
+  color: var(--text-color-inverse);
+  background-color: var(--accent-color-main);
+
+  transition-property: background-color;
+  transition-duration: .3s;
+  transition-timing-function: ease-in-out;
+}
+
+.btn--primary:disabled {
+  background-color: var(--secondary-elems-color);
+
+  transition-property:  background-color;
+  transition-duration: .3s;
+  transition-timing-function: ease-in-out;
+}
+
+.btn--primary:focus-visible {
+  background-color: var(--accent-color-light);
+
+  transition-property: background-color;
+  transition-duration: .3s;
+  transition-timing-function: ease-in-out;
+}
+
+@media (min-width: 1024px) {
+  .btn--primary:hover {
+    background-color: var(--accent-color-dark);
+
+    transition-property: background-color;
+    transition-duration: .3s;
+    transition-timing-function: ease-in-out;
+  }
+}

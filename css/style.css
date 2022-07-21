@@ -1,9 +1,21 @@
-@import "base/_normalize.css";
-@import "base/_fonts.css";
-@import "base/_variables.css";
-@import "base/_global.css";
-@import "base/_overall.css";
+/*** vendor ***/
+@import "vendor/normalize.css";
+
+/*** base ***/
+@import "base/variables.css";
+@import "base/fonts.css";
+@import "base/global.css";
+@import "base/overall.css";
 
 /*** blocks ***/
+@import "blocks/spinner.css";
+@import "blocks/action-btn.css";
+@import "blocks/filter-btn.css";
+@import "blocks/btn.css";
+@import "blocks/tippy.css";
 
-@import "blocks/_header.css";
+@import "blocks/contact-btn.css";
+@import "blocks/clients-table.css";
+
+@import "blocks/header.css";
+@import "blocks/clients.css";

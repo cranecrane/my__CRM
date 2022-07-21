@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="ready">
     <header class="header">
       <div class="header__container container">
         <svg class="header__logo">
@@ -17,5 +17,161 @@
         <input id="searchField" class="header__search-field" type="search" placeholder="Введите запрос">
       </div>
     </header>
+    <main>
+      <h1 class="visually-hidden">Список клиентов Skillbus</h1>
+      <section class="clients">
+        <div class="clients__container container">
+          <h2 class="clients__title">Клиенты</h2>
+          <div class="clients__table-container">
+            <table class="clients__table clients-table">
+              <thead>
+                <th class="clients-table__th--id clients-table__th">
+                  <button id="filterIdBtn" class="filter-btn--id filter-btn btn-reset" type="button">
+                    <span>id</span>
+                    <svg class="filter-btn__arrow">
+                      <use xlink:href="icons/icons.svg#arrow"></use>
+                    </svg>
+                  </button>
+                </th>
+                <th class="clients-table__th--name clients-table__th">
+                  <span>Фамилия Имя Отчество</span>
+                  <button id="filterNameBtn" class="filter-btn--name filter-btn btn-reset" type="button">
+                    <svg class="filter-btn__arrow filter-btn__arrow--down">
+                      <use xlink:href="icons/icons.svg#arrow"></use>
+                    </svg>
+                    А-Я
+                  </button>
+                </th>
+                <th class="clients-table__th--date clients-table__th">
+                  <span>Дата и&nbsp;время создания</span>
+                  <button id="filterDateBtn" class="filter-btn btn-reset" type="button">
+                    <svg class="filter-btn__arrow filter-btn__arrow--down">
+                      <use xlink:href="icons/icons.svg#arrow"></use>
+                    </svg>
+                  </button>
+                </th>
+                <th class="clients-table__th--date clients-table__th">
+                  <span>Последние изменения</span>
+                  <button id="filterChangesBtn" class="filter-btn btn-reset" type="button">
+                    <svg class="filter-btn__arrow filter-btn__arrow--down">
+                      <use xlink:href="icons/icons.svg#arrow"></use>
+                    </svg>
+                  </button>
+                </th>
+                <th class="clients-table__th--contacts clients-table__th">
+                  <span>Контакты</span>
+                </th>
+                <th class="clients-table__th--actions clients-table__th">
+                  <span>Действия</span>
+                </th>
+              </thead>
+              <tbody id="dataContainer" class="clients-table__body">
+                <!-- когда в таблице нет данных (clients-table__no-data-text),
+                  либо мы ждем ответа с сервера (clients-table__spinner)
+
+                <tr class="clients-table__empty-row">
+                  <td colspan="7">
+                    <div class="clients-table__empty-content">
+                      <div class="clients-table__no-data-text">В таблице пока нет данных :(</div>
+                      <svg class="clients-table__spinner spinner">
+                        <use xlink:href="icons/icons.svg#spinner"></use>
+                      </svg>
+                    </div>
+                  </td>
+                </tr>
+
+                -->
+                <tr class="clients-table__row">
+                  <td class="clients-table__td--id clients-table__td">123455</td>
+                  <td class="clients-table__td--name clients-table__td">Скворцов Денис Юрьевич</td>
+                  <td class="clients-table__td--date clients-table__td">
+                    <time datetime="2021-02-21">21.02.2021</time>
+                    <time datetime="12:41" class="clients-table__time">12:41</time>
+                  </td>
+                  <td class="clients-table__td--date clients-table__td">
+                    <time datetime="2021-02-21">21.02.2021</time>
+                    <time datetime="12:41" class="clients-table__time">12:41</time>
+                  </td>
+                  <td class="clients-table__td--contacts clients-table__td">
+                    <div class="clients-table__contacts-container">
+                      <button type="button" class="contact-btn btn-reset" aria-label="v kontakte" data-template="123455-vk">
+                        <svg class="contact-btn__icon">
+                          <use xlink:href="icons/icons.svg#vk"></use>
+                        </svg>
+                      </button>
+                      <button type="button" class="contact-btn btn-reset" aria-label="facebook" data-template="123455-facebook">
+                        <svg class="contact-btn__icon">
+                          <use xlink:href="icons/icons.svg#fb"></use>
+                        </svg>
+                      </button>
+                      <button type="button" class="contact-btn btn-reset" aria-label="phone number" data-template="123455-tel">
+                        <svg class="contact-btn__icon">
+                          <use xlink:href="icons/icons.svg#call"></use>
+                        </svg>
+                      </button>
+                      <button type="button" class="contact-btn btn-reset" aria-label="mail" data-template="123455-mail">
+                        <svg class="contact-btn__icon">
+                          <use xlink:href="icons/icons.svg#mail"></use>
+                        </svg>
+                      </button>
+                      <div class="tippy__content">
+                        <div id="123455-vk">
+                          <span class="contact-btn__tooltip--type">VK:</span>
+                          <span class="contact-btn__tooltip--value">@skvorets</span></div>
+                        <div id="123455-facebook">
+                          <span class="contact-btn__tooltip--type">Facebook:</span>
+                          <span class="contact-btn__tooltip--value">@skvorets</span>
+                        </div>
+                        <div id="123455-tel">
+                          <span class="contact-btn__tooltip--type">Телефон:</span>
+                          <span class="contact-btn__tooltip--value">+7 (985) 443-00-00</span>
+                        </div>
+                        <div id="123455-mail">
+                          <span class="contact-btn__tooltip--type">Email:</span>
+                          <span class="contact-btn__tooltip--value">@skvorets</span></div>
+                      </div>
+                      <button class="contact-btn__other btn-reset">+6</button>
+                    </div>
+                  </td>
+                  <td class="clients-table__td--actions clients-table__td">
+                    <div class="clients-table__actions-container">
+                      <button type="button" class="action-btn--edit action-btn btn-reset">
+                        <svg class="action-btn__icon">
+                          <use xlink:href="icons/icons.svg#pencil"></use>
+                        </svg>
+                        <svg class="action-btn__icon--hidden action-btn__spinner action-btn__icon spinner">
+                          <use xlink:href="icons/icons.svg#spinner"></use>
+                        </svg>
+                        <span>Изменить</span>
+                      </button>
+                      <button type="button" class="action-btn--cancel action-btn btn-reset">
+                        <svg class="action-btn__icon">
+                          <use xlink:href="icons/icons.svg#cancel"></use>
+                        </svg>
+                        <svg class="action-btn__icon--hidden action-btn__spinner action-btn__icon spinner">
+                          <use xlink:href="icons/icons.svg#spinner"></use>
+                        </svg>
+                        <span>Удалить</span>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <button type="button" class="clients__add-client-btn btn--secondary btn btn-reset">
+            <svg>
+              <use xlink:href="icons/icons.svg#add-client"></use>
+            </svg>
+            Добавить клиента
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <script src="js/vendor/popper.min.js"></script>
+    <script src="js/vendor/tippy-bundle.umd.js"></script>
+
+    <script src="js/contact-tooltip.js"></script>
 </body>
 </html>

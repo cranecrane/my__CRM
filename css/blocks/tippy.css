@@ -1,0 +1,31 @@
+.tippy-box[data-theme~='black'] {
+  border-radius: 0;
+  padding: 7px 14px;
+
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--white);
+  text-align: center;
+
+  background-color: var(--black);
+}
+
+.tippy-box[data-theme~='black'][data-placement^='top'] > .tippy-arrow::before {
+  border-top-color: var(--black);
+}
+
+.tippy-box[data-theme~='black'][data-placement^='bottom'] > .tippy-arrow::before {
+  border-bottom-color: var(--black);
+}
+
+.tippy-box[data-theme~='black'][data-placement^='left'] > .tippy-arrow::before {
+  border-left-color: var(--black);
+}
+
+.tippy-box[data-theme~='black'][data-placement^='right'] > .tippy-arrow::before {
+  border-right-color: var(--black);
+}
+
+.tippy__content {
+  display: none;
+}

@@ -1,0 +1,48 @@
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+
+  transition: color .3s ease-in-out;
+}
+
+.action-btn--edit:focus-visible {
+  color: var(--accent-color-main);
+  transition: color .3s ease-in-out;
+}
+
+.action-btn--cancel:focus-visible {
+  color: var(--warning-color);
+  transition: color .3s ease-in-out;
+}
+
+@media (min-width: 1024px) {
+  .action-btn--edit:hover {
+    color: var(--accent-color-main);
+    transition: color .3s ease-in-out;
+  }
+
+  .action-btn--cancel:hover {
+    color: var(--warning-color);
+    transition: color .3s ease-in-out;
+  }
+}
+
+.action-btn__icon {
+  --size: 13px;
+
+  margin-right: 3px;
+  width: var(--size);
+  height: var(--size);
+}
+
+.action-btn--edit .action-btn__icon {
+  color: var(--accent-color-main);
+}
+
+.action-btn--cancel .action-btn__icon {
+  color: var(--warning-color);
+}
+
+.action-btn__icon--hidden {
+  display: none;
+}

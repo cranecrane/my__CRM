@@ -45,7 +45,7 @@
   padding: 11px 15px 12px;
   width: var(--search-field-width);
 
-  font-size: 14px;
+  font-size: 1em;
   line-height: 1;
 }
 
