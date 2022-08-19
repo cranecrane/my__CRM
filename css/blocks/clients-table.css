@@ -7,12 +7,7 @@
 }
 
 .clients-table__body {
-  position: static;
   background-color: var(--white);
-}
-
-.ready .clients-table__body {
-  position: static;
 }
 
 .clients-table__row {
@@ -25,11 +20,6 @@
 
 .clients-table__empty-content {
   --padding-count: 1;
-
-  position: absolute;
-  z-index: var(--z-clients-table-empty-row);
-  top: 0;
-  left: 0;
 
   display: flex;
   justify-content: center;
@@ -57,12 +47,6 @@
   font-weight: 400;
   color: var(--accent-color-main);
 }
-
-.ready .clients-table__no-data-text,
-.ready .clients-table__spinner {
-  display: none;
-}
-
 
 /*** columns ***/
 
@@ -177,6 +161,7 @@
 @media (min-width: 1024px) {
   .clients-table__actions-container {
     flex-direction: row;
-    gap: 32px;
+    flex-wrap: wrap;
+    gap: 9px 32px;
   }
 }

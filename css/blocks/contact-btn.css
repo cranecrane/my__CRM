@@ -16,7 +16,7 @@
   transition: opacity .3s ease-in-out;
 }
 
-.contact-btn__other {
+.contact-btn__rest {
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -30,8 +30,8 @@
   font-weight: 600;
   line-height: 1;
 }
-
-.contact-btn__other:focus-visible {
+/*
+.contact-btn__rest:focus-visible {
   color: var(--text-color-inverse);
   background-color: var(--accent-color-main);
   transition-property: color, background-color;
@@ -40,14 +40,14 @@
 }
 
 @media (min-width: 1024px) {
-  .contact-btn__other:hover {
+  .contact-btn__rest:hover {
     color: var(--text-color-inverse);
     background-color: var(--accent-color-main);
     transition-property: color, background-color;
     transition-duration: .3s;
     transition-timing-function: ease-in-out;
   }
-}
+} */
 
 .contact-btn__tooltip--value {
   font-weight: 700;

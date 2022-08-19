@@ -35,11 +35,13 @@
 
 .clients__table-container {
   margin-bottom: 40px;
-  overflow-x: hidden;
+  overflow-x: auto;
 }
 
-.ready .clients__table-container {
-  overflow-x: auto;
+@media (min-width: 1024px) {
+  .clients__table-container {
+    overflow: hidden;
+  }
 }
 
 .clients__table {

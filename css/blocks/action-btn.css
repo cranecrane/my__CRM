@@ -10,7 +10,7 @@
   transition: color .3s ease-in-out;
 }
 
-.action-btn--cancel:focus-visible {
+.action-btn--delete:focus-visible {
   color: var(--warning-color);
   transition: color .3s ease-in-out;
 }
@@ -21,7 +21,7 @@
     transition: color .3s ease-in-out;
   }
 
-  .action-btn--cancel:hover {
+  .action-btn--delete:hover {
     color: var(--warning-color);
     transition: color .3s ease-in-out;
   }
@@ -39,7 +39,7 @@
   color: var(--accent-color-main);
 }
 
-.action-btn--cancel .action-btn__icon {
+.action-btn--delete .action-btn__icon {
   color: var(--warning-color);
 }
 
