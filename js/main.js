@@ -1,18 +1,20 @@
 (() => {
   document.addEventListener('DOMContentLoaded', async () => {
     const emptyTableTemplate = '<div class="clients-table__no-data-text">В таблице пока нет данных :(</div>';
-    const spinnerTemplate = `<tr class="clients-table__empty-row">
-                               <td colspan="7">
-                                 <div class="clients-table__empty-content">
-                                   <svg class="clients-table__spinner spinner">
-                                     <use xlink:href="icons/icons.svg#spinner"></use>
-                                   </svg>
-                                 </div>
-                               </td>
-                             </tr>`;
 
     const container = document.getElementById('dataContainer');
 
+    const createTooltips = (elemsClass) => {
+      tippy(document.querySelectorAll(elemsClass), {
+        content(reference) {
+          const id = reference.getAttribute('data-template');
+          const template = document.getElementById(id);
+          return template.innerHTML;
+        },
+        allowHTML: true,
+        theme: 'black',
+      });
+    }
     const normalizeDate = (data) => {
       let [day, time] = data.split('T');
       time = time.split(':', 2).join(':');
@@ -69,15 +71,21 @@
 
       contactsContentContainer.classList.add('tippy__content');
 
-      data.slice(0, 4).forEach((el) => {
-        container.append(createContact(el, id, contactsContentContainer))
-      });
+      data.slice(0, 4).forEach(el => container.append(createContact(el, id, contactsContentContainer)));
       if (data.length > visibleContactsCount) {
-        const restContactsElement = document.createElement('div');
+        const restContactsElement = document.createElement('button');
 
-        restContactsElement.classList.add('contact-btn__rest');
+        restContactsElement.type = 'button';
+        restContactsElement.classList.add('contact-btn__rest', 'btn-reset');
         restContactsElement.textContent = `+${data.length - visibleContactsCount}`;
+
         container.append(restContactsElement);
+        restContactsElement.addEventListener('click', () => {
+          container.innerHTML = '';
+          data.forEach(el => container.append(createContact(el, id, contactsContentContainer)));
+          container.append(contactsContentContainer)
+          createTooltips('.contact-btn');
+        });
       }
       container.append(contactsContentContainer);
     };
@@ -170,49 +178,11 @@
       data.forEach((el) => bodyElem.append(createTableRow(el)));
       console.log(data);
     };
-    // await fetch('http://localhost:3000/api/clients', {
-    //     method: 'POST',
-    //     body: JSON.stringify({
-    //       name: 'Вася',
-    //       surname: 'Пупкин',
-    //       lastName: 'Васильевич',
-    //       contacts: [
-    //         {
-    //           type: 'Телефон',
-    //           value: '+71234567890'
-    //         },
-    //         {
-    //           type: 'Email',
-    //           value: 'abc@xyz.com'
-    //         },
-    //         {
-    //           type: 'Facebook',
-    //           value: 'https://facebook.com/vasiliy-pupkin-the-best'
-    //         }
-    //       ]
-    //     }),
-    //     headers: {
-    //         'Content-type': 'application/json',
-    //     }
-    //   });
-    // createTableBody(clients, container);
-
-
 
     const response = await fetch('http://localhost:3000/api/clients');
     const clients = await response.json();
 
-
     createTableBody(clients, container);
-
-    tippy(document.querySelectorAll('.contact-btn'), {
-      content(reference) {
-        const id = reference.getAttribute('data-template');
-        const template = document.getElementById(id);
-        return template.innerHTML;
-      },
-      allowHTML: true,
-      theme: 'black',
-    });
+    createTooltips('.contact-btn');
   });
 })()

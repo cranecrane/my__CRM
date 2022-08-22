@@ -30,7 +30,7 @@
   font-weight: 600;
   line-height: 1;
 }
-/*
+
 .contact-btn__rest:focus-visible {
   color: var(--text-color-inverse);
   background-color: var(--accent-color-main);
@@ -47,7 +47,7 @@
     transition-duration: .3s;
     transition-timing-function: ease-in-out;
   }
-} */
+}
 
 .contact-btn__tooltip--value {
   font-weight: 700;

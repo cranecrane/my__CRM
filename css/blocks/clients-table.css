@@ -61,8 +61,8 @@
 }
 
 .clients-table__td {
-  padding-top: 0;
-  padding-bottom: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .clients-table__th--id,
@@ -148,8 +148,11 @@
 
 .clients-table__contacts-container {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 7px;
+
+  max-width: 130px;
 }
 
 .clients-table__actions-container {
