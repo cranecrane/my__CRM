@@ -13,9 +13,15 @@
 @import "blocks/filter-btn.css";
 @import "blocks/btn.css";
 @import "blocks/tippy.css";
+@import "blocks/input.css";
+@import "blocks/select.css";
+@import "blocks/modal.css";
 
 @import "blocks/contact-btn.css";
 @import "blocks/clients-table.css";
+@import "blocks/client-data-modal.css";
+@import "blocks/form-contact.css";
+@import "blocks/delete-client-modal.css";
 
 @import "blocks/header.css";
 @import "blocks/clients.css";

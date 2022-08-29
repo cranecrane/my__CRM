@@ -27,7 +27,7 @@
   /*** border ***/
 
   /*** z-index ***/
-  --z-change-data-modal: 100;
+  --z-client-data-modal: 100;
 
   /*** sizes ***/
   --max-width-container: 1024px;

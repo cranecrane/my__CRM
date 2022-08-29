@@ -1,0 +1,41 @@
+.input {
+  --focus-indent: 10px;
+
+  position: relative;
+  display: block;
+}
+
+.input.empty {
+  padding-top: var(--focus-indent);
+}
+
+.input__label {
+  font-size: 10px;
+  color: var(--text-secondary);
+}
+
+.empty .input__label {
+  position: absolute;
+  top: var(--focus-indent);
+  left: 0;
+
+  font-size: 14px;
+}
+
+.input__label--required::after {
+  content: '*';
+  color: var(--accent-color-main);
+}
+
+.input__elem {
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 1px solid  var(--secondary-elems-color);
+  padding-top: 4px;
+  padding-bottom: 6px;
+  width: 100%;
+
+  font-size: 14px;
+  font-weight: 600;
+}

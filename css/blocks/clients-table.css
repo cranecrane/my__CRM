@@ -137,11 +137,13 @@
 }
 
 .clients-table__time {
+  display: block;
   color: var(--text-secondary);
 }
 
 @media (min-width: 1024px) {
   .clients-table__time {
+    display: inline;
     margin-left: 8px;
   }
 }

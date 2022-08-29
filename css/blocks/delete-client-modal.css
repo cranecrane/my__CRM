@@ -1,0 +1,35 @@
+.delete-client-modal__window {
+  padding: 22px 13px;
+  min-height: 215px;
+  width: 100%;
+  max-width: 300px;
+}
+
+@media (min-width: 768px) {
+  .delete-client-modal__window {
+    max-width: 450px;
+  }
+}
+
+.delete-client-modal__title {
+  margin-bottom: 11px;
+  text-align: center;
+}
+
+.delete-client-modal__descr {
+  margin: 0 auto 25px;
+  max-width: 275px;
+
+  font-size: 14px;
+  text-align: center;
+}
+
+.delete-client-modal__submit-btn {
+  margin: 0 auto 5px;
+}
+
+.delete-client-modal__reject-btn {
+  display: block;
+  margin: 0 auto;
+  text-decoration: underline;
+}

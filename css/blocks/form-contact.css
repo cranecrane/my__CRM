@@ -1,0 +1,82 @@
+.form-contact {
+  --delete-btn-width: 37px;
+
+  position: relative;
+  display: flex;
+}
+
+.form-contact__type {
+  flex-shrink: 0;
+  width: 110px;
+}
+
+.form-contact__value {
+  border-left: none;
+  border-right: 1px solid var(--secondary-elems-color);
+  border-top: 1px solid var(--secondary-elems-color);
+  border-bottom: 1px solid var(--secondary-elems-color);
+  padding: 8px var(--delete-btn-width) 8px 6px;
+  width: 100%;
+
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text-color-main);
+  background-color: transparent !important;
+}
+
+.form-contact__value::placeholder {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+.form-contact__delete-btn {
+  position: absolute;
+  right: 0;
+  flex-shrink: 0;
+
+  border: 1px solid var(--secondary-elems-color);
+  padding: 12px 6px 11px 7px;
+
+  font-size: 0;
+  color: var(--text-secondary);
+  background-color: var(--gray-light);
+
+  transition-property: border-color, color;
+  transition-duration: .3s;
+  transition-timing-function: ease-in-out;
+  cursor: pointer;
+}
+
+.form-contact__delete-icon {
+  --delete-btn-size: 12px;
+
+  width: var(--delete-btn-size);
+  height: var(--delete-btn-size);
+}
+
+.form-contact__delete-btn:focus-visible,
+.form-contact__delete-btn:active {
+  border-color: var(--warning-color);
+  color: var(--warning-color);
+
+  transition-property: border-color, color;
+  transition-duration: .3s;
+  transition-timing-function: ease-in-out;
+}
+
+@media (min-width: 1024px) {
+  .form-contact__delete-btn:hover {
+    border-color: var(--warning-color);
+    color: var(--warning-color);
+
+    transition-property: border-color, color;
+    transition-duration: .3s;
+    transition-timing-function: ease-in-out;
+  }
+}
+
+.form-contact__delete-btn.hidden {
+  display: none;
+}

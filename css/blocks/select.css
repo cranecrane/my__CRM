@@ -1,0 +1,95 @@
+.choices {
+  --select-filter-padding-lr: 10px;
+
+  margin-bottom: 0;
+  width: 100%;
+}
+
+.choices[data-type*=select-one] .choices__inner {
+  padding-bottom: 10px;
+}
+
+.choices__inner {
+  vertical-align: middle;
+  border: 1px solid var(--secondary-elems-color);
+  border-radius: 0;
+  padding: 11px 9.31px 10px 11.97px;
+  min-height: 37px;
+
+  font-size: 12px;
+  line-height: 1;
+  background-color: var(--gray-light);
+}
+
+.is-flipped.is-open .choices__inner {
+  border-radius: 0;
+}
+
+
+.choices__list--single {
+  display: inline-block;
+  padding: 0px 13px 0px 0px;
+  width: 100%;
+}
+
+.choices[data-type*=select-one]::after {
+  content: "";
+  right: 9.31px;
+
+  border: none;
+  width: 10px;
+  height: 6px;
+
+  background-image: url('../../icons/select-arrow.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+
+  transform: rotate(-180deg);
+  transition: transform .3s ease-in-out;
+}
+
+.choices[role = "listbox"].is-open::after  {
+  margin-top: -2.5px;
+  transform: rotate(0deg);
+
+  transition: transform .3s ease-in-out;
+}
+
+.choices__list--dropdown, .choices__list[aria-expanded] {
+  background-color: #f4f3f6;
+  border: 1px solid var(--secondary-elems-color);
+}
+
+.is-flipped .choices__list--dropdown,
+.is-flipped .choices__list[aria-expanded] {
+  border-radius: 0;
+}
+
+.choices__list--dropdown {
+  padding: 5.5px 0;
+}
+
+.choices__list--dropdown .choices__item, .choices__list[aria-expanded] .choices__item {
+  padding: 6.75px 12px;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.choices__item.is-selected {
+  display: none;
+}
+
+.choices__list--dropdown .choices__item--selectable,
+.choices__list[aria-expanded] .choices__item--selectable {
+  transition: background-color .3s ease-in-out;
+}
+
+.choices__list--dropdown .choices__item--selectable.is-highlighted,
+.choices__list[aria-expanded] .choices__item--selectable.is-highlighted {
+  background-color: var(--gray-light);
+  transition: background-color .3s ease-in-out;
+}
+
+.choices__list--dropdown .choices__item--selectable::after {
+  display: none;
+}

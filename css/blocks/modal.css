@@ -1,0 +1,44 @@
+.modal {
+  position: fixed;
+  z-index: var(--z-client-data-modal);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgba(51, 51, 51, .6);
+  opacity: 0;
+  cursor: pointer;
+}
+
+.modal__window {
+  position: relative;
+  background-color: var(--white);
+  cursor: auto;
+}
+
+.modal__close-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  padding: 9px;
+  font-size: 0;
+  color: var(--text-secondary);
+}
+
+.modal__close-icon {
+  --size: 17px;
+
+  width: var(--size);
+  height: var(--size);
+}
+
+.modal__title {
+  font-size: 18px;
+  font-weight: 700;
+}
