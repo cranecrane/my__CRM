@@ -10,8 +10,15 @@
   width: 110px;
 }
 
+@media (min-width: 768px) {
+  .form-contact__type {
+    flex-shrink: 0;
+    width: 123px;
+  }
+}
+
 .form-contact__value {
-  border-left: none;
+  border-left: 1px solid transparent;
   border-right: 1px solid var(--secondary-elems-color);
   border-top: 1px solid var(--secondary-elems-color);
   border-bottom: 1px solid var(--secondary-elems-color);
@@ -25,6 +32,20 @@
   background-color: transparent !important;
 }
 
+.form-contact__value.warning {
+  border-color: var(--warning-color);
+}
+
+.form-contact__value:focus-visible {
+  border-color: var(--accent-color-main);
+}
+
+@media (min-width: 768px) {
+  .form-contact__value {
+    padding-left: 12px;
+  }
+}
+
 .form-contact__value::placeholder {
   font-size: 14px;
   font-weight: 400;
@@ -32,11 +53,10 @@
 }
 
 .form-contact__delete-btn {
-  position: absolute;
-  right: 0;
   flex-shrink: 0;
 
   border: 1px solid var(--secondary-elems-color);
+  border-left: 1px solid transparent;
   padding: 12px 6px 11px 7px;
 
   font-size: 0;

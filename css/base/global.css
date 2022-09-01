@@ -63,6 +63,10 @@ button::-moz-focus-inner, input[type="button"]::-moz-focus-inner, input[type="su
   padding: 0 !important;
 }
 
+button:focus-visible, [type="button"]:focus-visible, [type="reset"]:focus-visible, [type="submit"]:focus-visible {
+  outline: none;
+}
+
 input[type="search"],
 input[type="submit"],
 input[type="text"] {
@@ -81,8 +85,10 @@ display: none;
 }
 
 input:-webkit-autofill,
-input:-webkit-autofill:focus {
-  transition: background-color 600000s 0s, color 600000s 0s;
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
 
 ::-moz-placeholder, :-moz-placeholder {

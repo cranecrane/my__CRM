@@ -29,6 +29,19 @@
   padding: 9px;
   font-size: 0;
   color: var(--text-secondary);
+  transition: color .3s ease-in-out;
+}
+
+.modal__close-btn:focus-visible {
+  color: var(--accent-color-main);
+  transition: color .3s ease-in-out;
+}
+
+@media (min-width: 1280px) {
+  .modal__close-btn:hover {
+    color: var(--accent-color-dark);
+    transition: color .3s ease-in-out;
+  }
 }
 
 .modal__close-icon {
@@ -41,4 +54,46 @@
 .modal__title {
   font-size: 18px;
   font-weight: 700;
+}
+
+.modal__submit-btn {
+  margin: 0 auto 8px;
+  padding: 15px 35px;
+}
+
+.modal__submit-btn-icon {
+  --size: 12px;
+
+  margin-right: 6px;
+  width: var(--size);
+  height: var(--size);
+  color: #b89eff;
+}
+
+.modal__submit-btn-icon.hidden {
+  display: none;
+}
+
+.modal__reject-btn {
+  display: block;
+  border-bottom: 1px solid var(--text-color-main);
+  margin: 0 auto;
+
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--text-color-main);
+  transition: color .3s ease-in-out;
+}
+
+.modal__reject-btn:focus-visible {
+  color: var(--accent-color-main);
+  transition: color .3s ease-in-out;
+}
+
+@media (min-width: 1280px) {
+  .modal__reject-btn:hover {
+    color: var(--accent-color-dark);
+    transition: color .3s ease-in-out;
+  }
 }

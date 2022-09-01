@@ -43,6 +43,6 @@
   color: var(--warning-color);
 }
 
-.action-btn__icon--hidden {
+.action-btn__icon.hidden {
   display: none;
 }

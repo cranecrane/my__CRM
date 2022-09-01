@@ -22,15 +22,11 @@
 
   --secondary-elems-color: var(--gray-suit);
 
-  /*** font-size ***/
-
-  /*** border ***/
-
   /*** z-index ***/
   --z-client-data-modal: 100;
 
   /*** sizes ***/
-  --max-width-container: 1024px;
+  --max-width-container: 1280px;
   --padding-lr-container: 10px;
   --padding-lr-container-tablet: 20px;
 

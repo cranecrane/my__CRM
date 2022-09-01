@@ -21,10 +21,13 @@
   background-color: var(--gray-light);
 }
 
+.is-focused:not(.is-open) .choices__inner {
+  border-color: var(--accent-color-main);
+}
+
 .is-flipped.is-open .choices__inner {
   border-radius: 0;
 }
-
 
 .choices__list--single {
   display: inline-block;

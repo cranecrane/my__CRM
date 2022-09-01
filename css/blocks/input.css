@@ -1,24 +1,21 @@
 .input {
-  --focus-indent: 10px;
+  --focus-indent: 17px;
 
   position: relative;
   display: block;
-}
-
-.input.empty {
-  padding-top: var(--focus-indent);
+  font-size: 0;
 }
 
 .input__label {
   font-size: 10px;
   color: var(--text-secondary);
+  transition: font-size .3s ease-in-out;
 }
 
 .empty .input__label {
-  position: absolute;
-  top: var(--focus-indent);
-  left: 0;
-
+  display: inline-block;
+  transform: translateY(var(--focus-indent));
+  transition: font-size .3s ease-in-out;
   font-size: 14px;
 }
 
@@ -33,9 +30,24 @@
   border-left: none;
   border-bottom: 1px solid  var(--secondary-elems-color);
   padding-top: 4px;
-  padding-bottom: 6px;
+  padding-bottom: 7px;
   width: 100%;
 
   font-size: 14px;
   font-weight: 600;
+  transition: border-color .3s ease-in-out;
+}
+
+.input__elem.warning {
+  border-color: rgba(240, 106, 77, .5);
+  transition: border-color .3s ease-in-out;
+}
+
+.input__elem:focus-visible {
+  border-color: var(--accent-color-main);
+  transition: border-color .3s ease-in-out;
+}
+
+.empty .input__elem {
+  padding-bottom: 2px;
 }
