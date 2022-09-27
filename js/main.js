@@ -70,7 +70,15 @@
     };
 
     // mode === 'clientDataModal' || mode === 'clientDeleteModal'
-    const createModal = (mode, data = null, actionBtnsIconsArr = []) => {
+    const createModal = async (mode, id = null, actionBtnsIconsArr = []) => {
+      let data = null;
+      if (mode === 'clientDataModal' && id) {
+        const response = await fetch(`http://localhost:3000/api/clients/${id}`);
+        data = await response.json();
+      }
+
+      console.log(data)
+
       const modalClassPrefix = mode === 'clientDataModal' ? 'client-data-modal' : 'delete-client-modal';
       const modalIconsHTML = {
         close: `<svg class="modal__close-icon" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -124,13 +132,13 @@
       rejectBtn.classList.add(`${modalClassPrefix}__reject-btn`, 'modal__reject-btn', 'btn-reset');
       rejectBtn.textContent = data && mode === 'clientDataModal' ? 'Удалить клиента': 'Отмена';
       rejectBtn.addEventListener('click', () => {
-        closeModal()
-        if (data && mode === 'clientDataModal') createModal('clientDeleteModal', data.id);
+        closeModal();
+        if (id && mode === 'clientDataModal') createModal('clientDeleteModal', id);
       });
 
       //поведение блока для mode === 'clientDataModal'
-      //если data === null, т.е. данные не переданы, то показываем форму для создания нового клиента
-      //если data переданы, то показываем форму для редактирования данных клиента
+      //если id === null, то показываем форму для создания нового клиента
+      //если id передан, то показываем форму для редактирования данных клиента
       if (mode === 'clientDataModal') {
         const deleteContactBtnDataset = 'delete-btn-template';
         const inputFocus = (el) => el.parentElement.classList.remove('empty');
@@ -192,11 +200,11 @@
         const formHeader = document.createElement('div');
         formHeader.classList.add(`${modalClassPrefix}__form-header`);
 
-        modalTitle.textContent = data ? 'Изменить данные' : 'Новый клиент';
+        modalTitle.textContent = id ? 'Изменить данные' : 'Новый клиент';
 
         const clientId = document.createElement('span');
         clientId.classList.add(`${modalClassPrefix}__client-id`);
-        clientId.innerHTML = data ? `ID: ${data.id}` : null;
+        clientId.innerHTML = id ? `ID: ${data.id}` : null;
 
         const inputsContainer = document.createElement('div');
         inputsContainer.classList.add(`${modalClassPrefix}__form-inputs`);
@@ -225,7 +233,7 @@
         clientNameBlock.classList.add(`${modalClassPrefix}__input`, 'input');
         clientLastnameBlock.classList.add(`${modalClassPrefix}__input`, 'input');
 
-        if (!data) {
+        if (!id) {
           clientSurnameBlock.classList.add('empty');
           clientNameBlock.classList.add('empty');
           clientLastnameBlock.classList.add('empty');
@@ -349,13 +357,13 @@
             return str.substr(0, 1).toUpperCase() + str.substr(1).toLowerCase();
           };
           const request = async (data) => {
-            const requestMethod = data ? 'PATCH' : 'POST';
+            const requestMethod = id ? 'PATCH' : 'POST';
             let path = 'http://localhost:3000/api/clients/';
-            if (data) path += data.id;
+            if (id) path += id;
 
             const response = await fetch(path, {
               method: requestMethod,
-              body: JSON.stringify(clientData),
+              body: JSON.stringify(data),
               headers: {
                 'Content-type': 'application/json',
               }
@@ -370,11 +378,12 @@
               validError.textContent = `Ошибка ${status}: ${message}`
               validError.classList.remove('hidden');
             } else if (response.ok) {
-              createTableBody(await getClientsData(), container);
+              id ? document.getElementById(data.id).replaceWith(createTableRow(message)) : container.append(createTableRow(message));
+              createTooltips('.contact-btn');
               closeModal();
             }
           };
-          const clientData = {
+          const newClientData = {
             name: normalizeTextData(clientNameInput.value),
             surname: normalizeTextData(clientSurnameInput.value),
             lastName: normalizeTextData(clientLastnameInput.value),
@@ -385,7 +394,7 @@
 
           if (toValidateForm()) {
             submitBtn.children[0].classList.remove('hidden');
-            toShowRequestStatus(await request(data))
+            toShowRequestStatus(await request(newClientData))
           };
         });
 
@@ -395,11 +404,10 @@
         inputsContainer.append(clientSurnameBlock, clientNameBlock, clientLastnameBlock);
         contactsBlock.append(contactsContainer, addContactBtn);
 
-        data ? formHeader.append(modalTitle, clientId) : formHeader.append(modalTitle);
+        id ? formHeader.append(modalTitle, clientId) : formHeader.append(modalTitle);
         modalWindow.append(formHeader, inputsContainer, contactsBlock, deleteContactTooltipContent, validError, submitBtn, rejectBtn);
-      } else if (mode === 'clientDeleteModal') {
+      } else if (mode === 'clientDeleteModal' && id) {
         //поведение блока для mode === 'clientDeleteModal'
-        //в data принимаем id клиента
         modalTitle.textContent = 'Удалить клиента';
 
         const deleteDescr = document.createElement('p');
@@ -411,10 +419,10 @@
           e.preventDefault();
           submitBtn.children[0].classList.remove('hidden');
 
-          await fetch(`http://localhost:3000/api/clients/${data}`, {
+          await fetch(`http://localhost:3000/api/clients/${id}`, {
             method: 'DELETE',
           });
-          createTableBody(await getClientsData(), container);
+          document.getElementById(id).remove();
           closeModal();
         });
         modalWindow.append(modalTitle, deleteDescr, submitBtn, rejectBtn);
@@ -430,7 +438,7 @@
       toggleClass('hidden', actionBtnsIconsArr);
     }
 
-    const createContact = (data, id, container) => {
+    const createContact = (data, id, index, container) => {
       const iconsHTML = {
         'Vk': `<svg class="contact-btn__icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M8 0C3.58187 0 0 3.58171 0 8C0 12.4183 3.58187 16 8 16C12.4181 16 16 12.4183 16 8C16 3.58171 12.4181 0 8 0ZM12.058 8.86523C12.4309 9.22942 12.8254 9.57217 13.1601 9.97402C13.3084 10.1518 13.4482 10.3356 13.5546 10.5423C13.7065 10.8371 13.5693 11.1604 13.3055 11.1779L11.6665 11.1776C11.2432 11.2126 10.9064 11.0419 10.6224 10.7525C10.3957 10.5219 10.1853 10.2755 9.96698 10.037C9.87777 9.93915 9.78382 9.847 9.67186 9.77449C9.44843 9.62914 9.2543 9.67366 9.1263 9.90707C8.99585 10.1446 8.96606 10.4078 8.95362 10.6721C8.93577 11.0586 8.81923 11.1596 8.43147 11.1777C7.60291 11.2165 6.81674 11.0908 6.08606 10.6731C5.44147 10.3047 4.94257 9.78463 4.50783 9.19587C3.66126 8.04812 3.01291 6.78842 2.43036 5.49254C2.29925 5.2007 2.39517 5.04454 2.71714 5.03849C3.25205 5.02817 3.78697 5.02948 4.32188 5.03799C4.53958 5.04143 4.68362 5.166 4.76726 5.37142C5.05633 6.08262 5.4107 6.75928 5.85477 7.38684C5.97311 7.55396 6.09391 7.72059 6.26594 7.83861C6.45582 7.9689 6.60051 7.92585 6.69005 7.71388C6.74734 7.57917 6.77205 7.43513 6.78449 7.29076C6.82705 6.79628 6.83212 6.30195 6.75847 5.80943C6.71263 5.50122 6.53929 5.30218 6.23206 5.24391C6.07558 5.21428 6.0985 5.15634 6.17461 5.06697C6.3067 4.91245 6.43045 4.81686 6.67777 4.81686L8.52951 4.81653C8.82136 4.87382 8.88683 5.00477 8.92645 5.29874L8.92808 7.35656C8.92464 7.47032 8.98521 7.80751 9.18948 7.88198C9.35317 7.936 9.4612 7.80473 9.55908 7.70112C10.0032 7.22987 10.3195 6.67368 10.6029 6.09801C10.7279 5.84413 10.8358 5.58142 10.9406 5.31822C11.0185 5.1236 11.1396 5.02785 11.3593 5.03112L13.1424 5.03325C13.195 5.03325 13.2483 5.03374 13.3004 5.04274C13.6009 5.09414 13.6832 5.22345 13.5903 5.5166C13.4439 5.97721 13.1596 6.36088 12.8817 6.74553C12.5838 7.15736 12.2661 7.55478 11.9711 7.96841C11.7001 8.34652 11.7215 8.53688 12.058 8.86523Z" fill="#9873FF"/>
@@ -456,11 +464,11 @@
 
       contactBtn.type = 'button';
       contactBtn.ariaLabel = data.type;
-      contactBtn.dataset.template = `${id}-${data.type}`;
+      contactBtn.dataset.template = `${id}-${data.type}-${index}`;
       contactBtn.classList.add('contact-btn', 'btn-reset');
       contactBtn.innerHTML = iconsHTML[data.type];
 
-      dataContainer.id = `${id}-${data.type}`;
+      dataContainer.id = `${id}-${data.type}-${index}`;
       typeElem.classList.add('contact-btn__tooltip--type');
       typeElem.textContent = data.type + ': ';
       valueElem.classList.add('contact-btn__tooltip--value');
@@ -477,7 +485,7 @@
 
       contactsContentContainer.classList.add('tippy__content');
 
-      data.slice(0, visibleContactsCount).forEach(el => container.append(createContact(el, id, contactsContentContainer)));
+      data.slice(0, visibleContactsCount).forEach((el, index) => container.append(createContact(el, id, index, contactsContentContainer)));
       if (data.length > visibleContactsCount) {
         const restContactsElement = document.createElement('button');
 
@@ -532,6 +540,7 @@
       const actionsBtnEdit = document.createElement('button');
       const actionsBtnDelete = document.createElement('button');
 
+      rowElem.id = id;
       rowElem.classList.add(rowClass);
       idCol.classList.add(`${colClass}--id`, colClass);
       nameCol.classList.add(`${colClass}--name`, colClass);
@@ -568,7 +577,7 @@
 
       actionsBtnEdit.addEventListener('click', (e) => {
         toggleClass('hidden', [e.currentTarget.children[0], e.currentTarget.children[1]]);
-        createModal('clientDataModal', {id, surname, name, lastName, contacts}, [e.currentTarget.children[0], e.currentTarget.children[1]]);
+        createModal('clientDataModal', id, [e.currentTarget.children[0], e.currentTarget.children[1]]);
       });
       actionsBtnDelete.addEventListener('click', (e) => {
         toggleClass('hidden', [e.currentTarget.children[0], e.currentTarget.children[1]]);

@@ -4,8 +4,7 @@
   padding-top: 24px;
   padding-bottom: 27px;
   width: min(calc(100vw - var(--padding-lr-container) * 2), 450px);
-  min-height: 400px;
-  max-height: 670px;
+  max-height: calc(100vh - 50px);
 
   overflow-y: auto;
 }
