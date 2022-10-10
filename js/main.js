@@ -119,6 +119,11 @@
       return result;
     };
 
+    const openClientCard = () => {
+      const id = location.hash.substr(1);
+      createModal('clientDataModal', id);
+    };
+
     // mode === 'clientDataModal' || mode === 'clientDeleteModal'
     const createModal = async (mode, id = null, actionBtnsIconsArr = []) => {
       let data = null;
@@ -142,9 +147,13 @@
                 </svg>`
       };
       const closeModal = () => {
+        const removeHash = () => {
+          history.pushState("", document.title, window.location.pathname + window.location.search);
+        };
         document.body.classList.remove('disable-scroll');
         smoothAppearance(modalElem, 'hide');
         document.removeEventListener('keydown', closeModalEsc);
+        removeHash();
       };
       const closeModalEsc = (event) => {
         if (event.keyCode === 27) closeModal();
@@ -685,7 +694,10 @@
         timers.shift();
       }
     });
-
+    if (location.hash) openClientCard();
+    window.addEventListener('hashchange', () => {
+      openClientCard();
+    })
     createTableBody(await toSort(), container);
     addClientBtn.addEventListener('click', () => createModal('clientDataModal'));
   });
