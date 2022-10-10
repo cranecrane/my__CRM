@@ -1,5 +1,10 @@
 (() => {
   document.addEventListener('DOMContentLoaded', async () => {
+    const getClientsData = async() => {
+      const response = await fetch('http://localhost:3000/api/clients');
+      const clients = await response.json();
+      return clients;
+    }
     const emptyTableTemplate = `<tr class="clients-table__empty-row">
                                   <td colspan="7">
                                     <div class="clients-table__empty-content">
@@ -10,6 +15,12 @@
 
     const container = document.getElementById('dataContainer');
     const addClientBtn = document.getElementById('addClientBtn');
+
+    const activeSortClass = 'sort-active';
+    const sortUpClass = 'sort-btn--up';
+    const sortDownClass = 'sort-btn--down';
+    const sortBtns = document.querySelectorAll('.sort-btn');
+    const sortIdBtn = document.getElementById('sortIdBtn');
 
     const toggleClass = (elClass, elemsArr) => {
       elemsArr.forEach((el) => {
@@ -68,6 +79,57 @@
         });
       });
     };
+
+    const toSort = async (sortBtn = sortIdBtn) => {
+      const source = await getClientsData();
+      const elemsToSort = [];
+      const result = [];
+
+      const toSortLetters = (btn, arr) => {
+        arr.sort();
+        if (btn.classList.contains(sortDownClass)) arr.reverse();
+      };
+      const sortRules = {
+        'sortIdBtn': () => {
+          const getDirection = (el, a, b) => el.classList.contains('sort-btn--down') ? b - a : a - b;
+
+          source.forEach( (el) =>  elemsToSort.push(el.id) );
+          elemsToSort.sort( (a, b) => getDirection(sortBtn, a, b) );
+          elemsToSort.forEach( (id) => result.push(source.splice(source.findIndex(el => el.id === id), 1)[0]) );
+        },
+        'sortNameBtn': () => {
+          source.forEach( (el) =>  elemsToSort.push(el.surname + ' ' + el.name + ' ' + el.lastName) );
+          toSortLetters(sortBtn, elemsToSort);
+          elemsToSort.forEach( (name) => result.push(source.splice(source.findIndex(el => el.surname + ' ' + el.name + ' ' + el.lastName === name), 1)[0]) );
+        },
+        'sortDateBtn': () => {
+          source.forEach( (el) => elemsToSort.push(el.createdAt) );
+          toSortLetters(sortBtn, elemsToSort);
+          elemsToSort.forEach( (date) => result.push(source.splice(source.findIndex(el => el.createdAt === date), 1)[0]) );
+        },
+        'sortUpdateBtn': () => {
+          source.forEach( (el) => elemsToSort.push(el.updatedAt) );
+          toSortLetters(sortBtn, elemsToSort);
+          elemsToSort.forEach( (date) => result.push(source.splice(source.findIndex(el => el.updatedAt === date), 1)[0]) );
+        },
+      };
+      sortRules[sortBtn.id]();
+      return result;
+    };
+    sortBtns.forEach((el) => el.addEventListener('click', async (e) => {
+      target = e.currentTarget;
+      if (!target.classList.contains(activeSortClass)) {
+        prevActiveElem = document.querySelector('.' + activeSortClass);
+        prevActiveElem.classList.remove(activeSortClass, sortUpClass, sortDownClass);
+        target.classList.add(sortUpClass);
+      } else if (target.classList.contains(sortDownClass)) {
+        target.classList.replace(sortDownClass, sortUpClass);
+      } else {
+        target.classList.replace(sortUpClass, sortDownClass);
+      }
+      target.classList.add(activeSortClass);
+      createTableBody(await toSort(target), container);
+    }));
 
     // mode === 'clientDataModal' || mode === 'clientDeleteModal'
     const createModal = async (mode, id = null, actionBtnsIconsArr = []) => {
@@ -602,13 +664,8 @@
       data.forEach((el) => bodyElem.append(createTableRow(el)));
       createTooltips('.contact-btn');
     };
-    const getClientsData = async() => {
-      const response = await fetch('http://localhost:3000/api/clients');
-      const clients = await response.json();
-      return clients;
-    }
 
-    createTableBody(await getClientsData(), container);
+    createTableBody(await toSort(), container);
     addClientBtn.addEventListener('click', () => createModal('clientDataModal'));
   });
 })()

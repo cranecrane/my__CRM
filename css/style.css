@@ -10,7 +10,7 @@
 /*** blocks ***/
 @import "blocks/spinner.css";
 @import "blocks/action-btn.css";
-@import "blocks/filter-btn.css";
+@import "blocks/sort-btn.css";
 @import "blocks/btn.css";
 @import "blocks/tippy.css";
 @import "blocks/input.css";

@@ -1,0 +1,59 @@
+.sort-btn {
+  font-weight: 400;
+  line-height: 1;
+  color: var(--accent-color-main);
+  text-transform: uppercase;
+
+  transition: color .3s ease-in-out;
+}
+
+.sort-btn.sort-active {
+  color: var(--accent-color-dark);
+  transition: color .3s ease-in-out;
+}
+
+.sort-btn:focus-visible {
+  color: var(--text-secondary);
+  transition: color .3s ease-in-out;
+}
+
+@media (min-width: 1024px) {
+  .sort-btn:hover {
+    color: var(--text-color-main);
+    transition: color .3s ease-in-out;
+  }
+}
+
+.sort-btn--id {
+  font-size: 1em;
+}
+
+.sort-btn--name {
+  font-size: .835em;
+  font-weight: 600;
+}
+
+.sort-btn__arrow {
+  --size: 8px;
+
+  width: var(--size);
+  height: var(--size);
+  transition-property: opacity;
+  transition-duration: .3s;
+  transition-timing-function: ease-in-out;
+}
+
+.sort-btn:focus-visible .sort-btn__arrow {
+  opacity: .7;
+  transition: opacity .3s ease-in-out;
+}
+
+.sort-btn__arrow {
+  transform: rotate(180deg);
+  transition: transform .3s ease-in-out;
+}
+
+.sort-btn--up .sort-btn__arrow {
+  transform: rotate(0);
+  transition: transform .3s ease-in-out;
+}
