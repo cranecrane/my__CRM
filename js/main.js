@@ -1,10 +1,5 @@
 (() => {
   document.addEventListener('DOMContentLoaded', async () => {
-    const getClientsData = async() => {
-      const response = await fetch('http://localhost:3000/api/clients');
-      const clients = await response.json();
-      return clients;
-    }
     const emptyTableTemplate = `<tr class="clients-table__empty-row">
                                   <td colspan="7">
                                     <div class="clients-table__empty-content">
@@ -21,6 +16,8 @@
     const sortDownClass = 'sort-btn--down';
     const sortBtns = document.querySelectorAll('.sort-btn');
     const sortIdBtn = document.getElementById('sortIdBtn');
+
+    const searchField = document.getElementById('searchField');
 
     const toggleClass = (elClass, elemsArr) => {
       elemsArr.forEach((el) => {
@@ -81,6 +78,11 @@
     };
 
     const toSort = async (sortBtn = sortIdBtn) => {
+      const getClientsData = async() => {
+        const response = await fetch('http://localhost:3000/api/clients');
+        const clients = await response.json();
+        return clients;
+      };
       const source = await getClientsData();
       const elemsToSort = [];
       const result = [];
@@ -116,20 +118,6 @@
       sortRules[sortBtn.id]();
       return result;
     };
-    sortBtns.forEach((el) => el.addEventListener('click', async (e) => {
-      target = e.currentTarget;
-      if (!target.classList.contains(activeSortClass)) {
-        prevActiveElem = document.querySelector('.' + activeSortClass);
-        prevActiveElem.classList.remove(activeSortClass, sortUpClass, sortDownClass);
-        target.classList.add(sortUpClass);
-      } else if (target.classList.contains(sortDownClass)) {
-        target.classList.replace(sortDownClass, sortUpClass);
-      } else {
-        target.classList.replace(sortUpClass, sortDownClass);
-      }
-      target.classList.add(activeSortClass);
-      createTableBody(await toSort(target), container);
-    }));
 
     // mode === 'clientDataModal' || mode === 'clientDeleteModal'
     const createModal = async (mode, id = null, actionBtnsIconsArr = []) => {
@@ -664,6 +652,39 @@
       data.forEach((el) => bodyElem.append(createTableRow(el)));
       createTooltips('.contact-btn');
     };
+
+    sortBtns.forEach((el) => el.addEventListener('click', async (e) => {
+      target = e.currentTarget;
+      if (!target.classList.contains(activeSortClass)) {
+        prevActiveElem = document.querySelector('.' + activeSortClass);
+        prevActiveElem.classList.remove(activeSortClass, sortUpClass, sortDownClass);
+        target.classList.add(sortUpClass);
+      } else if (target.classList.contains(sortDownClass)) {
+        target.classList.replace(sortDownClass, sortUpClass);
+      } else {
+        target.classList.replace(sortUpClass, sortDownClass);
+      }
+      target.classList.add(activeSortClass);
+      createTableBody(await toSort(target), container);
+    }));
+
+    const timers = [];
+
+    searchField.addEventListener('input', () => {
+      const timerId = setTimeout(async () => {
+        const searchStr = searchField.value;
+        const response = await fetch(`http://localhost:3000/api/clients?search=${searchStr}`);
+        const clients = await response.json();
+        createTableBody(clients, container);
+        clearTimeout(timerId);
+      }, 300);
+      timers.push(timerId);
+
+      if (timers.length > 1) {
+        clearInterval(timers[0]);
+        timers.shift();
+      }
+    });
 
     createTableBody(await toSort(), container);
     addClientBtn.addEventListener('click', () => createModal('clientDataModal'));
