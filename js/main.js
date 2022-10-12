@@ -17,7 +17,9 @@
     const sortBtns = document.querySelectorAll('.sort-btn');
     const sortIdBtn = document.getElementById('sortIdBtn');
 
+    const searchContainer = document.getElementById('search');
     const searchField = document.getElementById('searchField');
+    const timers = [];
 
     const toggleClass = (elClass, elemsArr) => {
       elemsArr.forEach((el) => {
@@ -132,8 +134,6 @@
         data = await response.json();
       }
 
-      console.log(data)
-
       const modalClassPrefix = mode === 'clientDataModal' ? 'client-data-modal' : 'delete-client-modal';
       const modalIconsHTML = {
         close: `<svg class="modal__close-icon" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -148,7 +148,7 @@
       };
       const closeModal = () => {
         const removeHash = () => {
-          history.pushState("", document.title, window.location.pathname + window.location.search);
+          history.pushState('', document.title, window.location.pathname + window.location.search);
         };
         document.body.classList.remove('disable-scroll');
         smoothAppearance(modalElem, 'hide');
@@ -194,6 +194,9 @@
         closeModal();
         if (id && mode === 'clientDataModal') createModal('clientDeleteModal', id);
       });
+
+      const disabledLayout = document.createElement('div');
+      disabledLayout.classList.add('modal__disabled-layout');
 
       //поведение блока для mode === 'clientDataModal'
       //если id === null, то показываем форму для создания нового клиента
@@ -450,10 +453,13 @@
           };
 
           e.preventDefault();
+          modalElem.append(disabledLayout);
 
           if (toValidateForm()) {
             submitBtn.children[0].classList.remove('hidden');
             toShowRequestStatus(await request(newClientData))
+          } else {
+            disabledLayout.remove();
           };
         });
 
@@ -555,8 +561,8 @@
         container.append(restContactsElement);
         restContactsElement.addEventListener('click', () => {
           container.innerHTML = '';
-          data.forEach(el => container.append(createContact(el, id, contactsContentContainer)));
-          container.append(contactsContentContainer)
+          data.forEach((el, index) => container.append(createContact(el, id, index, contactsContentContainer)));
+          container.append(contactsContentContainer);
           createTooltips('.contact-btn');
         });
       }
@@ -677,14 +683,102 @@
       createTableBody(await toSort(target), container);
     }));
 
-    const timers = [];
+    const createSearchDropdown = (data) => {
+      let focusedItem = -1;
+
+      const focusItem = (index) => {
+        if (!data.length) return false;
+        if (index > data.length - 1 || index < 0) {
+          focusedItem = -1;
+          return searchField.focus();
+        }
+        focusedItem = index;
+        listElem.children[index].focus({focusVisible: true});
+      };
+      const fillSearchValue = (index) => {
+        if (!listElem.children[index]) return false;
+        searchField.value = listElem.children[index].textContent;
+        searchField.focus();
+      };
+      const selectItem = (id) => {
+        const target = document.getElementById(id);
+
+        target.tabIndex = '1';
+        target.focus();
+        target.scrollIntoView({block:'center'});
+        listElem.remove();
+        searchContainer.removeEventListener('keydown', searchFieldKeydown);
+        searchField.value = '';
+        target.addEventListener('blur', () => target.removeAttribute('tabIndex'));
+      };
+      const searchFieldKeydown = (event) => {
+        const keycode = event.keyCode;
+        switch (keycode) {
+          case 40: //arrow down
+          event.preventDefault();
+          focusedItem++;
+          focusItem(focusedItem);
+          break;
+          case 38: //arrow up
+            event.preventDefault();
+            focusedItem--;
+            focusItem(focusedItem);
+            break;
+          case 27: //escape
+            listElem.remove();
+            searchField.value = '';
+            break;
+          case 39: //arrow right
+            fillSearchValue(focusedItem);
+            break;
+          case 13: //enter
+            if (focusedItem >= 0) {
+              selectItem(listElem.children[focusedItem].dataset.id);
+              focusedItem = -1;
+            };
+            break;
+        }
+      };
+
+      const prevDropdown = document.querySelector('.search__list');
+      const listElem = document.createElement('ul');
+
+      if (prevDropdown) prevDropdown.remove();
+      if (!searchField.value) return false;
+      listElem.classList.add('search__list');
+      data.forEach((el) => {
+        const listItemElem = document.createElement('li');
+
+        listItemElem.classList.add('search__item');
+        listItemElem.tabIndex = '0';
+        listItemElem.dataset.id = el.id;
+        listItemElem.textContent = el.surname + ' ' + el.name + ' ' + el.lastName;
+        listItemElem.addEventListener('click', () => {
+          selectItem(el.id);
+        });
+        listElem.append(listItemElem);
+      })
+      searchContainer.addEventListener('keydown', searchFieldKeydown);
+      searchContainer.append(listElem);
+      document.body.addEventListener('click', (e) => {
+        if (!listElem.contains(e.target)) {
+          listElem.remove()
+          searchContainer.removeEventListener('keydown', searchFieldKeydown);
+        };
+      }, {once: true})
+    }
 
     searchField.addEventListener('input', () => {
       const timerId = setTimeout(async () => {
+        searchField.disabled = true;
+
         const searchStr = searchField.value;
         const response = await fetch(`http://localhost:3000/api/clients?search=${searchStr}`);
         const clients = await response.json();
-        createTableBody(clients, container);
+
+        searchField.disabled = false;
+        searchField.focus();
+        createSearchDropdown(clients);
         clearTimeout(timerId);
       }, 300);
       timers.push(timerId);

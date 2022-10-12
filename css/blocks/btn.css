@@ -74,6 +74,10 @@
   transition-timing-function: ease-in-out;
 }
 
+.btn--primary:focus-visible .spinner {
+  color: #fff;
+}
+
 @media (min-width: 1024px) {
   .btn--primary:hover {
     background-color: var(--accent-color-dark);

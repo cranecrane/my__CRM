@@ -37,31 +37,3 @@
     margin-right: 53px;
   }
 }
-
-.header__search-field {
-  --search-field-width: 581px;
-
-  display: none;
-  border: 1px solid #d6d6d6;
-  padding: 11px 15px 12px;
-  width: var(--search-field-width);
-
-  font-size: 14px;
-  line-height: 1;
-  transition: border-color .3s ease-in-out;
-}
-
-.header__search-field::placeholder {
-  color: var(--text-secondary);
-}
-
-.header__search-field:focus-visible {
-  border-color: var(--accent-color-main);
-  transition: border-color .3s ease-in-out;
-}
-
-@media (min-width: 768px) {
-  .header__search-field {
-    display: inline;
-  }
-}

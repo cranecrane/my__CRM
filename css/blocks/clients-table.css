@@ -15,6 +15,10 @@
   height: 59px;
 }
 
+.clients-table__row:focus {
+  background-color: var(--bg-highlighted);
+}
+
 
 /*** empty-content ***/
 
@@ -38,7 +42,7 @@
 
 @media (min-width: 1024px) {
   .clients-table__empty-content {
-    width: var(--table-width-desktop);
+    max-width: var(--table-width-desktop);
   }
 }
 

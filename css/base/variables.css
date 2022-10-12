@@ -22,8 +22,11 @@
 
   --secondary-elems-color: var(--gray-suit);
 
+  --bg-highlighted: rgba(152, 115, 255, .2);
+
   /*** z-index ***/
   --z-client-data-modal: 100;
+  --z-search-dropdown: 200;
 
   /*** sizes ***/
   --max-width-container: 1280px;
